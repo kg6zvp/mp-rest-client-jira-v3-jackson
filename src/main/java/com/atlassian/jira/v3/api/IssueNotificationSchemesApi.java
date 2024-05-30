@@ -79,7 +79,7 @@ public interface IssueNotificationSchemesApi {
 
 	/**
 	 * Get projects using notification schemes paginated
-	 *
+	 * <p>
 	 * Returns a [paginated](#pagination) mapping of project that have notification scheme assigned. You can provide either one or multiple notification scheme IDs or project IDs to filter by. If you don&#39;t provide any, this will return a list of all mappings. Note that only company-managed (classic) projects are supported. This is because team-managed projects don&#39;t have a concept of a default notification scheme. The mappings are ordered by projectId.  **[Permissions](#permissions) required:** Permission to access Jira.
 	 *
 	 */

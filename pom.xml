@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>
+			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -65,12 +65,32 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<jakarta.ws.rs.version>2.1.6</jakarta.ws.rs.version>
+		<lombok.version>1.18.30</lombok.version>
 		<microprofile.rest.client.api.version>2.0</microprofile.rest.client.api.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<delombok.output>${project.build.directory}/delombok</delombok.output>
 	</properties>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
+				<version>1.18.20.0</version>
+				<configuration>
+					<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+					<outputDirectory>${delombok.output}</outputDirectory>
+					<addOutputDirectory>false</addOutputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>delombok</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -89,7 +109,8 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.2.0</version>
 				<configuration>
-					<doclint>none</doclint>
+					<sourcepath>${delombok.output}</sourcepath>
+					<additionalJOption>-Xdoclint:none</additionalJOption>
 				</configuration>
 				<executions>
 					<execution>
@@ -99,6 +120,13 @@
 						</goals>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+						<version>${lombok.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
