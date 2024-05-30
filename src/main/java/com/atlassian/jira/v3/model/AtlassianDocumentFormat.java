@@ -81,7 +81,7 @@ public class AtlassianDocumentFormat {
 				return bulletedListSb.toString();
 			case INLINE_CARD:
 				if (this.getAttrs() == null || this.getAttrs().getUrl() == null) return "Error decoding inline card: " + this.getAttrs() != null ? this.getAttrs().toString() : "null";
-				return String.format("%s", this.getAttrs().getUrl().toString());
+				return String.format("%s", this.getAttrs().getUrl());
 		}
 		throw new UnsupportedOperationException("TODO");
 	}
